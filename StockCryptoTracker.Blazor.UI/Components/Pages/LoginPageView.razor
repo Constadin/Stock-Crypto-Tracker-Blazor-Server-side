@@ -1,0 +1,69 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+
+<HeadContent><title>Stock Crypto Tracker - Login</title></HeadContent>
+
+<div class="login-page">
+    <div class="login-form">
+        <h3>Login</h3>
+        <div class="form-group">
+            <input type="text" placeholder="Username" @bind="Username" class="input-field" />
+        </div>
+
+        <div class="form-group">
+            <input type="@PasswordInputType" placeholder="Password" @bind="Password" class="input-field" />
+        </div>
+
+        <div class="form-group checkbox-group">
+            <input type="checkbox" id="showPassword" @bind="ShowPassword" />
+            <label for="showPassword">Show Password</label>
+        </div>
+
+        <button class="login-button" @onclick="LoginUser">Login</button>
+    </div>
+</div>
+<div class="login-footer">
+    <div class="login-footer-content">
+        <h5><strong>About Stock Crypto Tracker</strong></h5>
+        <p>
+            <strong>Stock Crypto Tracker </strong>is a modern real-time platform for monitoring stocks and cryptocurrencies, designed for investors who demand speed, accuracy, and continuous market insights.
+            Focusing on live data streaming and user-friendly design, it provides an immediate view of the financial markets, empowering users to make fast and well-informed decisions.<br /><br />
+
+            <strong>The platform offers:
+
+            Live stock and crypto prices,
+
+            Dynamic charts and market trends,
+
+            Customizable alerts for critical price movements,
+
+                Reliable cloud-based infrastructure for maximum availability.
+            </strong><br /><br />
+
+            <strong>Stock Crypto Tracker</strong> was developed to bridge the gap between professional-grade analysis and everyday access to vital market data.
+
+            With a strong focus on simplicity, speed, and innovation, we aim to become the go-to tool for every investor actively tracking the pulse of global markets.
+
+        </p>
+        <h6>
+            <strong>© 2025 Stock Crypto Tracker.</strong> All rights reserved.
+            This material is provided for informational purposes only and does not constitute investment, legal, tax, or financial advice.
+        </h6>
+    </div>
+</div>
+
+@code {
+    private string Username { get; set; }
+    private string Password { get; set; }
+    private bool ShowPassword { get; set; }
+
+    private string PasswordInputType => ShowPassword ? "text" : "password";
+
+    private void LoginUser()
+    {
+        // Εδώ βάζεις λογική login
+        Console.WriteLine($"Login attempt: {Username}");
+        NavigationManager.NavigateTo("/home", forceLoad:true);
+    }
+}

@@ -1,0 +1,65 @@
+﻿@using StockCryptoTracker.Blazor.UI.Services
+@inject TickerService TickerService
+
+
+<div class="top-row" style="color:White; border-top:0;">
+    <div class="ticker-wrapper">
+        <div class="ticker">
+            <span>
+                @if (AllPrices.Count > 0)
+                {
+                    foreach (var item in AllPrices)
+                    {
+                        var imageUrl = GetImageUrl(item.Key);
+
+                        <text>
+                            @if (imageUrl != string.Empty)
+                            {
+                                <img src="@imageUrl" style="width:22px; height:22px; margin-right:20px;" />
+                            }
+                            <span style="font-size: 0.9rem;">@item.Key: $@item.Value</span>
+                            <span style="margin-right: 80px;"></span>
+                        </text>
+                    }
+                }
+                else
+                {
+                    <text>Loading...</text>
+                }
+            </span>
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    private Dictionary<string, decimal> CryptoPrices = new();
+
+    private Dictionary<string, decimal> StockPrices = new();
+
+    private Dictionary<string, decimal> AllPrices = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        CryptoPrices = await TickerService.GetCryptoPricesAsync();
+        StockPrices = await TickerService.GetStockPricesAsync();
+        AllPrices = CryptoPrices.Concat(StockPrices)
+                                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+    }
+    private string GetImageUrl(string symbol)
+    {
+        return symbol switch
+        {
+            "BTC" => "bitcoin.png",
+            "ETH" => "blockchain.png",
+            "ADA" => "cardano.png",
+            "DOGE" => "dogcoin.png",
+            "SOL" => "solana2.png",
+            "USDT" => "tether-usdt-logo.png",
+            "TRX" => "tron-trx-logo.png",
+            _ => string.Empty
+        };
+    }
+}

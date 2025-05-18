@@ -1,0 +1,70 @@
+﻿@page "/commodities"
+@using StockCryptoTracker.Blazor.UI.Models
+@using StockCryptoTracker.Blazor.UI.Services
+@inject CommoditiesService CommoditiesService
+
+<HeadContent><title>Stock Crypto Tracker - Commodities Daily</title></HeadContent>
+
+<h3>Daily Commodities Market Prices</h3>
+
+<div class="mb-3 btn-conteiner">
+    <div class="mb-3">
+        <button class="btn btn-secondary me-2" @onclick="@(() => LoadCommodity("GC=F"))">Gold</button>
+        <button class="btn btn-secondary me-2" @onclick="@(() => LoadCommodity("CL=F"))">Crude Oil</button>
+        <button class="btn btn-secondary me-2" @onclick="@(() => LoadCommodity("SI=F"))">Silver</button>
+        <button class="btn btn-secondary me-2" @onclick="@(() => LoadCommodity("NG=F"))">Natural Gas</button>
+    </div>
+</div>
+
+
+@if (CommodityData == null || !CommodityData.Historical.Any())
+{
+    <p><em class="fs-5 p-2">Loading...</em></p>
+}
+else
+{
+    <div class="table-container">
+        <table class=" table  table-striped table-hover table-bordered border-secondary table-sm fs-6" data-bs-theme="dark">
+            <thead class="table-light fw-bold fs-5">
+                <tr>
+                    <th>Date</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                    <th>Change (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in CommodityData.Historical)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Open</td>
+                        <td>@item.High</td>
+                        <td>@item.Low</td>
+                        <td>@item.Close</td>
+                        <td>@item.Volume</td>
+                        <td>@item.ChangePercent</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@code {
+    private CommodityPriceResponse? CommodityData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Φορτώνει default Gold μόλις μπει η σελίδα
+        await LoadCommodity("GC=F");
+    }
+
+    private async Task LoadCommodity(string symbol)
+    {
+        CommodityData = await CommoditiesService.GetCommodityPriceAsync(symbol);
+        StateHasChanged(); // Ανανέωση της σελίδας
+    }
+}

@@ -1,0 +1,59 @@
+﻿.top-row {
+    background-color: #323232;
+    border-top: 1px solid white;
+    justify-content: center;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid white;
+}
+
+    .top-row ::deep a, .top-row ::deep .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-row ::deep a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+/*Ticker */
+.ticker-wrapper {
+    color: #fff;
+    width:1320px;
+    height: 40px;
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    overflow-x: hidden; /* Απόκρυψη υπερβολικού περιεχομένου */
+    position:sticky;
+}
+
+.ticker {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 40s linear infinite;
+}
+
+    .ticker span {
+        font-size: 1rem;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+/* Animation για μετακίνηση από δεξιά προς αριστερά */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(35%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

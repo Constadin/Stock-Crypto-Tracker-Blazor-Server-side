@@ -1,0 +1,29 @@
+﻿h3 {
+    color: white;
+    padding:20px;
+}
+em {
+    color: white;
+    margin-left: 30px;
+}
+.card-img-top {
+    height: 200px; /* Σταθερό ύψος για όλες τις εικόνες */
+    object-fit: cover; /* Διατηρεί την εικόνα σε αναλογία χωρίς παραμόρφωση */
+    width: 100%; /* Ορίζει ότι η εικόνα θα καλύψει το πλήρες πλάτος του card */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card {
+    border-radius: 10px; /* Για να έχει ωραίες γωνίες το card */
+}
+
+.card-body {
+    padding: 2rem; /* Παρέχει άνετο padding */
+}
+
+.card:hover {
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Εφέ σκιάς */
+    transform: scale(1.05); /* Ελαφριά αύξηση του μεγέθους της κάρτας */
+}

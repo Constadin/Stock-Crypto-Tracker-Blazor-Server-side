@@ -1,0 +1,73 @@
+﻿.login-page {
+    background-image: url('financial-chart-moving-arrow-gra.png');
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin: 0 -23px 0 -35px;
+    padding:30px;
+}
+
+
+.login-form {
+    background-color: rgba(0, 0, 0, 0.4); 
+    padding: 40px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    text-align: center;
+    color: white;
+    
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: none;
+}
+
+.login-button {
+    padding: 10px;
+    background-color: green;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .login-button:hover {
+        background-color: #0056b3;
+    }
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.checkbox-group label {
+    margin-left: 8px;
+}
+
+.login-footer {
+    margin: 0 -23px 0 -35px;
+    height: 75vh;
+    background-color: #323232;
+    color: white;
+}
+.login-footer-content p {
+    text-align: justify;
+}
+
+.login-footer-content h5,
+.login-footer-content h6 {
+    text-align: left;
+}
+
+.login-footer-content {
+    padding: 20px 200px 30px 200px;
+}

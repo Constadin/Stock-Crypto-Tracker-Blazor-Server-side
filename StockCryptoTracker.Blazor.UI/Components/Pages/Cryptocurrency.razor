@@ -1,0 +1,100 @@
+﻿@page "/cryptocurrency"
+@using StockCryptoTracker.Blazor.UI.Models
+@using StockCryptoTracker.Blazor.UI.Services
+@inject CryptocurrencyService CryptocurrencyService
+
+
+<HeadContent><title>Stock Crypto Tracker - Cryptocurrency</title></HeadContent>
+
+<h3>Cryptocurrency Prices</h3>
+
+<div class="mb-3 btn-conteiner">
+    <div class="mb-3">
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("BTCUSD"))">Bitcoin</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("ETHUSD"))">Ethereum</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("ADAUSD"))">Cardano</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("DOGEUSD"))">Dogecoin</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("SOLUSD"))">Solana</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("USDTUSD"))">Tether</button>
+    <button class="btn btn-secondary me-2" @onclick="@(() => LoadCryptoQuote("TRXUSD"))">Tron</button>
+    </div>
+</div>
+
+<div class="mb-3 picker-container d-flex">
+    <div class="me-2">
+        <label for="fromDate">From:</label>
+        <input type="date" id="fromDate" @bind="FromDate" class="form-control" />
+    </div>
+    <div>
+        <label for="toDate">To:</label>
+        <input type="date" id="toDate" @bind="ToDate" class="form-control" />
+    </div>
+</div>
+
+
+@if (historicalData == null)
+{
+    <p><em class="fs-5 p-2">Loading...</em></p>
+}
+else
+{
+    <div class="table-container">
+        <table class=" table  table-striped table-hover table-bordered border-secondary table-sm fs-6" data-bs-theme="dark">
+            <thead class="table-light fw-bold fs-5">
+                <tr>
+                    <th>Symbol</th>
+                    <th>Date</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                    <th>Change (%)</th>
+                    <th>VWAP</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var data in historicalData)
+                {
+                    <tr>
+                        <td>@data.Symbol</td>
+                        <td>@data.Date</td>
+                        <td>@data.Open</td>
+                        <td>@data.High</td>
+                        <td>@data.Low</td>
+                        <td>@data.Close</td>
+                        <td>@data.Volume</td>
+                        <td>@data.ChangePercent</td>
+                        <td>@data.Vwap</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<CryptocurrencyHistoricalPriceResponse>? historicalData;
+    private DateTime FromDate { get; set; } = new DateTime(2025, 1, 1);  // Default start date
+    private DateTime ToDate { get; set; } = new DateTime(2025, 4, 1);    // Default end date
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Φορτώνει τα δεδομένα για το Bitcoin όταν φορτώνει η σελίδα
+        await LoadCryptoQuote("BTCUSD");
+    }
+
+    private async Task LoadCryptoQuote(string symbol)
+    {
+        // Λήψη δεδομένων ιστορικών τιμών για το συγκεκριμένο κρυπτονόμισμα με τις ημερομηνίες που έχουν επιλεγεί
+        historicalData = await CryptocurrencyService.GetHistoricalCryptoDataAsync(symbol, FromDate.ToString("yyyy-MM-dd"), ToDate.ToString("yyyy-MM-dd"));
+        StateHasChanged();
+    }
+
+    private async Task OnDateRangeSubmit()
+    {
+        // Λήψη δεδομένων για το Bitcoin (ή οποιοδήποτε άλλο σύμβολο)
+        historicalData = await CryptocurrencyService.GetHistoricalCryptoDataAsync("BTCUSD", FromDate.ToString("yyyy-MM-dd"), ToDate.ToString("yyyy-MM-dd"));
+        StateHasChanged();
+    }
+}

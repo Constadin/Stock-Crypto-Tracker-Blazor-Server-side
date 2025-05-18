@@ -1,0 +1,53 @@
+﻿@inject NavigationManager Navigation
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Stock Crypto Tracker</a>
+    </div>
+</div>
+
+<!-- Το κουμπί για το μενού πλοήγησης -->
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" id="nav-toggle" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/home" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-file-earmark-text-fill" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/cryptocurrency" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-file-earmark-text-fill" aria-hidden="true"></span> Cryptocurrency
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/stockMarket" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-file-earmark-text-fill" aria-hidden="true"></span> Stock Market
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/forex" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-file-earmark-text-fill" aria-hidden="true"></span> Forex
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/commodities" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-file-earmark-text-fill" aria-hidden="true"></span> Commodities Daily
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <button class="nav-link"  @onclick="() =>Logout()">
+                <span class="bi bi-person-circle" aria-hidden="true"></span> Logout
+            </button>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private void Logout()
+    {
+        Navigation.NavigateTo("/", forceLoad: true); // το true κάνει hard reload
+    }
+}

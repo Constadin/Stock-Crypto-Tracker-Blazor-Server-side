@@ -1,0 +1,50 @@
+﻿@page "/StockMarket"
+@using StockCryptoTracker.Blazor.UI.Models
+@using StockCryptoTracker.Blazor.UI.Services
+@inject StockService StockService
+
+<HeadContent><title>Stock Crypto Tracker - Stock Market</title></HeadContent>
+
+<h3>Stock Market</h3>
+
+@if (stockItems == null)
+{
+    <p><em class="fs-5 p-2">Loading...</em></p>
+}
+else
+{
+    <div class="table-container">
+        <table class=" table  table-striped table-hover table-bordered border-secondary table-sm fs-6" data-bs-theme="dark">
+            <thead class="table-light fw-bold fs-5">
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Exchange</th>
+                    <th>Exchange Short Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stock in stockItems)
+                {
+                    <tr>
+                        <td>@stock.Symbol</td>
+                        <td>@stock.Name</td>
+                        <td>@stock.Exchange</td>
+                        <td>@stock.ExchangeShortName</td>
+                        <td>@(stock.Price.HasValue ? stock.Price.Value.ToString("F2") : "-")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<StockItem>? stockItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        stockItems = await StockService.GetStockListAsync();
+    }
+}

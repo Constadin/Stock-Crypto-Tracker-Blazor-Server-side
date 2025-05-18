@@ -1,0 +1,50 @@
+﻿@page "/forex"
+@using StockCryptoTracker.Blazor.UI.Models
+@using StockCryptoTracker.Blazor.UI.Services
+@inject ForexService ForexService
+
+<HeadContent><title>Stock Crypto Tracker - Forex</title></HeadContent>
+
+<h3>Forex Currency Pairs</h3>
+
+@if (forexPairs == null)
+{
+    <p><em class="fs-5 p-2">Loading...</em></p>
+}
+else
+{
+    <div class="table-container">
+        <table class=" table  table-striped table-hover table-bordered border-secondary table-sm fs-6" data-bs-theme="dark">
+            <thead class="table-light fw-bold fs-5">
+                <tr>
+                    <th>Symbol</th>
+                    <th>From Currency</th>
+                    <th>To Currency</th>
+                    <th>From Name</th>
+                    <th>To Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pair in forexPairs)
+                {
+                    <tr>
+                        <td>@pair.Symbol</td>
+                        <td>@pair.FromCurrency</td>
+                        <td>@pair.ToCurrency</td>
+                        <td>@pair.FromName</td>
+                        <td>@pair.ToName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<ForexItem>? forexPairs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forexPairs = await ForexService.GetAvailableForexPairsAsync();
+    }
+}

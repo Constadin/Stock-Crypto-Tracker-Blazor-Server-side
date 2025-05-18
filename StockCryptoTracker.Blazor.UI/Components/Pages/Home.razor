@@ -1,0 +1,42 @@
+﻿@page "/home"
+@using StockCryptoTracker.Blazor.UI.Models
+@using StockCryptoTracker.Blazor.UI.Services
+@inject ArticleService ArticleService
+
+<HeadContent><title>Stock Crypto Tracker - Home</title></HeadContent>
+
+<h3>Latest Articles</h3>
+
+@if (Articles == null || !Articles.Any())
+{
+    <p><em class="fs-5 p-2">Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var article in Articles)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4" style="margin:3%;">
+                    <img src="@article.Image" class="card-img-top" alt="Article Image" />
+                    <div class="card-body">
+                        <h5 class="card-title">@article.Title</h5>
+                        <span><strong>Author:</strong> @article.Author</span><br />
+                        <span><strong>Site:</strong> @article.Site</span><br />
+                        <span><strong>Published:</strong> @article.Date</span><br /><br />
+                        <a href="@article.Link" target="_blank" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ArticleItem>? Articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Articles = await ArticleService.GetArticlesAsync();
+    }
+}
